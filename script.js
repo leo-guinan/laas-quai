@@ -30,6 +30,8 @@
 
   function track(event, extra = {}) {
     const payload = { event, page: "quai-trust-experiment", timestamp: new Date().toISOString(), query: Object.fromEntries(incoming.entries()), ...extra };
+    if (event === "page_view") window.fathom?.trackEvent("Quai Page Viewed");
+    if (event === "route_click") window.fathom?.trackEvent(`Quai ${extra.trust_path || "unknown"} Route Clicked`);
     try {
       const key = "trust_experiment_events";
       const events = JSON.parse(localStorage.getItem(key) || "[]");
